@@ -1,0 +1,10 @@
+# NeverBreak Configuration
+# Author: thebiologist13
+
+# Item IDs that can be toggled for NeverBreak
+items:
+    - 278
+    - 285
+    - 257
+    - 274
+    - 270

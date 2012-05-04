@@ -1,0 +1,15 @@
+name: NeverBreak
+version: 1.0
+author: thebiologist13
+description: Make tools never break for certain players.
+main: com.github.thebiologist13.NeverBreak
+commands:
+    neverbreak:
+        description: Toggles if NeverBreak is on for yourself.
+        usage: /neverbreak
+        permission: neverbreak.toggle
+        permission: You don't have the neverbreak.toggle permission!
+permissions:
+    neverbreak.toggle:
+        description: Allows the user/group to toggle NeverBreak
+        default: op
