@@ -10,11 +10,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class ToggleCommand implements CommandExecutor{
+	
 	public static HashMap<Player, Boolean> mode = new HashMap<Player, Boolean>();
+	
 	Logger log = Logger.getLogger("Minecraft");
 
 	public boolean onCommand(CommandSender arg0, Command arg1, String arg2, String[] arg3) {
 		Player p = null;
+		
 		if(arg0 instanceof Player) {
 			p = (Player) arg0;
 		}

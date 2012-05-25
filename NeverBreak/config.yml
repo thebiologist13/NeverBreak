@@ -8,3 +8,6 @@ items:
     - 257
     - 274
     - 270
+    
+# This is whether NeverBreak is enabled by default when a player logs in.
+autoNeverBreak: false
