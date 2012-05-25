@@ -6,10 +6,13 @@ main: com.github.thebiologist13.NeverBreak
 commands:
     neverbreak:
         description: Toggles if NeverBreak is on for yourself.
-        usage: /neverbreak
+        usage: /neverbreak [other player]
         permission: neverbreak.toggle
         permission-message: You don't have the neverbreak.toggle permission!
 permissions:
     neverbreak.toggle:
         description: Allows the user/group to toggle NeverBreak
+        default: op
+    neverbreak.toggle.others:
+        description: Allows the user/group to toggle NeverBreak mode for people other than themselves.
         default: op

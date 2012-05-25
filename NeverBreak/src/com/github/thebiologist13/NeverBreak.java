@@ -29,7 +29,7 @@ public class NeverBreak extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new LoginListener(this), this);
 		
 		//Command
-		tc = new ToggleCommand();
+		tc = new ToggleCommand(this);
 		getCommand("neverbreak").setExecutor(tc);
 		
 		config = this.getCustomConfig();
