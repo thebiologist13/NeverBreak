@@ -26,6 +26,7 @@ public class NeverBreak extends JavaPlugin {
 	public void onEnable() {
 		//Listener
 		getServer().getPluginManager().registerEvents(new BreakListener(this), this);
+		getServer().getPluginManager().registerEvents(new LoginListener(this), this);
 		
 		//Command
 		tc = new ToggleCommand();

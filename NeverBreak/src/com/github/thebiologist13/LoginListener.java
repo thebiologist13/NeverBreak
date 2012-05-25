@@ -17,6 +17,11 @@ public class LoginListener implements Listener {
 		this.config = neverBreak.getCustomConfig();
 	}
 	
+	/*
+	 * All this class does is set the player's NeverBreak mode 
+	 * to the automatic one in the config.yml on login.
+	 */
+	
 	@EventHandler
 	public void onLogin(PlayerLoginEvent ev) {
 		Player p = ev.getPlayer();
