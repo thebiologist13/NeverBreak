@@ -1,7 +1,8 @@
 # NeverBreak Configuration
 # Author: thebiologist13
 
-# Item IDs that can be toggled for NeverBreak
+# Item IDs that can be toggled for NeverBreak and have their durability set.
+# The default IDs are for pickaxes.
 items:
     - 278
     - 285

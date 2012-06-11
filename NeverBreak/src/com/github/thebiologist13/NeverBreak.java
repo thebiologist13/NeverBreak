@@ -37,7 +37,7 @@ public class NeverBreak extends JavaPlugin {
 		
 		//Durability command setup
 		dc = new DurabilityCommand(this);
-		getCommand("setdurabilty").setExecutor(dc);
+		getCommand("setdurability").setExecutor(dc);
 		
 		config = this.getCustomConfig();
 		config.options().copyDefaults(true);

@@ -63,7 +63,7 @@ public class DurabilityCommand implements CommandExecutor {
 		}
 		
 		if(p == null && arg1.getName().equalsIgnoreCase("setdurability")) {
-			plugin.log.info(ChatColor.RED + "The " + arg1.getName() + " cannot be used from the console.");
+			plugin.log.info("The " + arg1.getName() + " cannot be used from the console.");
 			return true;
 		}
 		
