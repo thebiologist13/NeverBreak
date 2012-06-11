@@ -17,20 +17,27 @@ public class NeverBreak extends JavaPlugin {
 	//YAML file variable
 	private File configFile;
 	
-	//Executor variable
+	//Toggling command executor variable
 	private ToggleCommand tc;
+	
+	//Set durability command executor variable
+	private DurabilityCommand dc;
 	
 	//Logger
 	Logger log = Logger.getLogger("Minecraft");
 	
 	public void onEnable() {
-		//Listener
+		//Listeners
 		getServer().getPluginManager().registerEvents(new BreakListener(this), this);
 		getServer().getPluginManager().registerEvents(new LoginListener(this), this);
 		
-		//Command
+		//Toggle command setup
 		tc = new ToggleCommand(this);
 		getCommand("neverbreak").setExecutor(tc);
+		
+		//Durability command setup
+		dc = new DurabilityCommand(this);
+		getCommand("setdurabilty").setExecutor(dc);
 		
 		config = this.getCustomConfig();
 		config.options().copyDefaults(true);

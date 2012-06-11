@@ -87,6 +87,12 @@ public class ToggleCommand implements CommandExecutor{
 				return true;
 			}
 		}
+		
+		if(p == null && arg1.getName().equalsIgnoreCase("neverbreak")) {
+			plugin.log.info(ChatColor.RED + "The " + arg1.getName() + " cannot be used from the console.");
+			return true;
+		}
+		
 		return false;
 	}
 }
