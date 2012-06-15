@@ -12,3 +12,6 @@ items:
     
 # This is whether NeverBreak is enabled by default when a player logs in.
 autoNeverBreak: false
+
+# Should the NeverBreak mode of a player be saved per-world, or globally?
+globalNeverBreak: true

@@ -27,9 +27,13 @@ public class NeverBreak extends JavaPlugin {
 	Logger log = Logger.getLogger("Minecraft");
 	
 	public void onEnable() {
+		
 		//Listeners
 		getServer().getPluginManager().registerEvents(new BreakListener(this), this);
 		getServer().getPluginManager().registerEvents(new LoginListener(this), this);
+		getServer().getPluginManager().registerEvents(new FishListener(this), this);
+		getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
+		getServer().getPluginManager().registerEvents(new WorldChangeListener(this), this);
 		
 		//Toggle command setup
 		tc = new ToggleCommand(this);

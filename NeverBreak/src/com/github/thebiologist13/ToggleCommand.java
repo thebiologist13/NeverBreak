@@ -48,7 +48,7 @@ public class ToggleCommand implements CommandExecutor{
 						mode.put(p, true);
 					}
 				} else {
-					mode.put(p, true);
+					mode.put(p, false);
 				}
 				//Send message
 				p.sendMessage(ChatColor.GREEN + "NeverBreak mode toggled to " + ChatColor.GOLD + String.valueOf(mode.get(p)) + ChatColor.GREEN + "!");
