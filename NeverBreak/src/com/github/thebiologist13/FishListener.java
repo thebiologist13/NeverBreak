@@ -43,12 +43,12 @@ public class FishListener implements Listener {
 					if(ToggleCommand.mode.containsKey(p)) {
 						//If that mode is true
 						if(ToggleCommand.mode.get(p) == true) {
-							//Set the item to -1 durability
+							//Set the item to -128 durability
 							stack.setDurability((short) -128);
 						//If that mode is false, proceed as normal 
 						} else {
 							//Unless it was set to REALLY unused, then make the durability 0 again
-							if(stack.getDurability() <= 0 ) {
+							if(stack.getDurability() < 0 ) {
 								stack.setDurability((short) 0);
 							}
 						}

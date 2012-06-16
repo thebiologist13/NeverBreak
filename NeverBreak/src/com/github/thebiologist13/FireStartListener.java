@@ -2,34 +2,30 @@ package com.github.thebiologist13;
 
 import java.util.List;
 
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.inventory.ItemStack;
 
-public class BowFireListener implements Listener {
-	
+public class FireStartListener implements Listener {
+
 	private NeverBreak plugin;
 	
-	public BowFireListener(NeverBreak plugin) {
+	public FireStartListener(NeverBreak plugin) {
 		this.plugin = plugin;
 	}
 	
 	@EventHandler
-	public void onBowFire(EntityShootBowEvent ev) {
-		//Player
-		Player p = null;
-		//Entity
-		Entity e = ev.getEntity();
+	public void onFireStart(BlockIgniteEvent ev) {
 		
-		if(e instanceof Player) {
-			p = (Player) e;
-		} else {
+		if(!ev.getCause().equals(IgniteCause.FLINT_AND_STEEL)) {
 			return;
 		}
 		
+		//Player
+		Player p = ev.getPlayer();
 		//Item player has in hand
 		ItemStack stack = p.getItemInHand();
 		//Items that NeverBreak can be used with
@@ -51,7 +47,7 @@ public class BowFireListener implements Listener {
 							//Unless it was set to REALLY unused, then make the durability 0 again
 							if(stack.getDurability() < 0 ) {
 								stack.setDurability((short) 0);
-							}
+							} 
 						}
 					} 
 				}

@@ -51,7 +51,7 @@ public class EntityDamageListener implements Listener {
 						//If that mode is false, proceed as normal 
 						} else {
 							//Unless it was set to REALLY unused, then make the durability 0 again
-							if(stack.getDurability() <= 0 ) {
+							if(stack.getDurability() < 0 ) {
 								stack.setDurability((short) 0);
 							}
 						}
