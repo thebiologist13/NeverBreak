@@ -15,3 +15,6 @@ autoNeverBreak: false
 
 # Should the NeverBreak mode of a player be saved per-world, or globally?
 globalNeverBreak: true
+
+# Should NeverBreak be enabled for armor?
+allowArmor: false
