@@ -38,6 +38,8 @@ public class NeverBreak extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new BowFireListener(this), this);
 		getServer().getPluginManager().registerEvents(new FireStartListener(this), this);
 		getServer().getPluginManager().registerEvents(new BlockDamageListener(this), this);
+		getServer().getPluginManager().registerEvents(new ShearListener(this), this);
+		getServer().getPluginManager().registerEvents(new FarmListener(this), this);
 		
 		//Toggle command setup
 		tc = new ToggleCommand(this);
