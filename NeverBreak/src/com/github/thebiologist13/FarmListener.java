@@ -27,7 +27,7 @@ public class FarmListener implements Listener {
 		//Player
 		Player p = ev.getPlayer();
 		
-		if(ev.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if(!(ev.getAction() == Action.RIGHT_CLICK_BLOCK)) {
 			return;
 		}
 		
