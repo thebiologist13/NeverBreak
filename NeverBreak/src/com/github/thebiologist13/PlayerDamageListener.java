@@ -44,7 +44,7 @@ public class PlayerDamageListener implements Listener {
 				//Make sure that it is specifying data IDs 
 				if(o instanceof Integer) {
 					for(int i = 0; i < armor.length; i++) {
-						//If item in hand matches one from config
+						//If item in armor slot matches one from config
 						if(armor[i].getTypeId() == (Integer) o && config.getBoolean("allowArmor", false)) {
 							//If a mode has been set for the player
 							if(ToggleCommand.mode.containsKey(p)) {
