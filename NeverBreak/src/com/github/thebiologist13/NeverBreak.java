@@ -33,6 +33,8 @@ public class NeverBreak extends JavaPlugin {
 	
 	public void onEnable() {
 		
+		//TODO Maybe add higher priority in events.
+		
 		//Config
 		config = this.getCustomConfig();
 		

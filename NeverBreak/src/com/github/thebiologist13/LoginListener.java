@@ -25,10 +25,10 @@ public class LoginListener implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent ev) {
+		Player p = ev.getPlayer();
+		ToggleCommand.mode.put(p, config.getBoolean("autoNeverBreak"));
 		if(config.getBoolean("messageOnLogin", true)) {
-			Player p = ev.getPlayer();
 			p.sendMessage(ChatColor.GREEN + "Your NeverBreak mode has been set to " + ChatColor.GOLD + config.getBoolean("autoNeverBreak") + ChatColor.GREEN + " !");
-			ToggleCommand.mode.put(p, config.getBoolean("autoNeverBreak"));
 		}
 	}
 }
