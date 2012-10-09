@@ -1,27 +1,28 @@
-package com.github.thebiologist13;
+package com.github.thebiologist13.listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerShearEntityEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class ShearListener implements Listener {
+import com.github.thebiologist13.NeverBreak;
+
+public class FishListener implements Listener {
 	
 	private NeverBreak plugin = null;
 	
-	public ShearListener(NeverBreak plugin) {
+	public FishListener(NeverBreak plugin) {
 		this.plugin = plugin;
 	}
 	
 	@EventHandler
-	public void onPlayerShear(PlayerShearEntityEvent ev) {
-		//Player
+	public void onPlayerFish(PlayerFishEvent ev) {
+		//Player Variable
 		Player p = ev.getPlayer();
-		
 		//Item player has in hand
 		ItemStack stack = p.getItemInHand();
 		
-		plugin.resetDurability(stack, p);
+		plugin.resetDurability(stack, p, true);
 	}
 }

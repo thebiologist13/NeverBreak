@@ -1,4 +1,4 @@
-package com.github.thebiologist13;
+package com.github.thebiologist13.listeners;
 
 import java.util.HashMap;
 
@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+
+import com.github.thebiologist13.NeverBreak;
+import com.github.thebiologist13.ToggleCommand;
 
 public class WorldChangeListener implements Listener {
 	

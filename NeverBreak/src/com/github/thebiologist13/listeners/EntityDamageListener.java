@@ -1,4 +1,4 @@
-package com.github.thebiologist13;
+package com.github.thebiologist13.listeners;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+
+import com.github.thebiologist13.NeverBreak;
 
 public class EntityDamageListener implements Listener {
 	
@@ -30,6 +32,6 @@ public class EntityDamageListener implements Listener {
 		//Item player has in hand
 		ItemStack stack = p.getItemInHand();
 
-		plugin.resetDurability(stack, p);
+		plugin.resetDurability(stack, p, true);
 	}
 }

@@ -1,4 +1,4 @@
-package com.github.thebiologist13;
+package com.github.thebiologist13.listeners;
 
 import java.util.logging.Logger;
 
@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import com.github.thebiologist13.NeverBreak;
+import com.github.thebiologist13.ToggleCommand;
 
 public class LoginListener implements Listener {
 	

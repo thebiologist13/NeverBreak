@@ -2,7 +2,8 @@
 # Author: thebiologist13
 
 # Item IDs that can be toggled for NeverBreak and have their durability set.
-# The default IDs are for pickaxes.
+# The default IDs are for pickaxes. If you want to configure the  total durability
+# Of tools, use the format <Tool ID>-<Durability Value>.
 items:
     - 278
     - 285

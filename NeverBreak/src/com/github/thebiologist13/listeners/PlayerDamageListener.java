@@ -1,4 +1,4 @@
-package com.github.thebiologist13;
+package com.github.thebiologist13.listeners;
 
 import java.util.List;
 
@@ -9,6 +9,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+
+import com.github.thebiologist13.NeverBreak;
+import com.github.thebiologist13.ToggleCommand;
 
 public class PlayerDamageListener implements Listener {
 	

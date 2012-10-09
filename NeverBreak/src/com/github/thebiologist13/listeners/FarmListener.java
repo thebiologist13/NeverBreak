@@ -1,4 +1,4 @@
-package com.github.thebiologist13;
+package com.github.thebiologist13.listeners;
 
 import net.minecraft.server.Material;
 
@@ -8,6 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import com.github.thebiologist13.NeverBreak;
 
 public class FarmListener implements Listener {
 	
@@ -34,6 +36,6 @@ public class FarmListener implements Listener {
 		//Item player has in hand
 		ItemStack stack = p.getItemInHand();
 		
-		plugin.resetDurability(stack, p);
+		plugin.resetDurability(stack, p, true);
 	}
 }

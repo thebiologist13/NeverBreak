@@ -1,5 +1,5 @@
 name: NeverBreak
-version: 1.6b
+version: 1.7
 author: thebiologist13
 description: Make tools never break for certain players.
 main: com.github.thebiologist13.NeverBreak
@@ -7,11 +7,13 @@ commands:
     neverbreak:
         description: Toggles if NeverBreak is on for yourself.
         usage: /neverbreak [other player]
+        aliases: [nb, nobreak]
         permission: neverbreak.toggle
         permission-message: You don't have the neverbreak.toggle permission!
     setdurability:
         description: Set the durability of the tool in hand.
         usage: /setdurability <value>
+        aliases: [dura, strength]
         permission: neverbreak.setdurability
         permission-message: You don't have the neverbreak.setdurability permission!
 permissions:
