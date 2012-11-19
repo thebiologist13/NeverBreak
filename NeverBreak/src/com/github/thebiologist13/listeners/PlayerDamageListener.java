@@ -11,13 +11,15 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.thebiologist13.NeverBreak;
-import com.github.thebiologist13.ToggleCommand;
 
 public class PlayerDamageListener implements Listener {
+	
+	private NeverBreak plugin;
 	
 	private FileConfiguration config = null;
 	
 	public PlayerDamageListener(NeverBreak plugin) {
+		this.plugin= plugin;
 		config = plugin.getCustomConfig();
 	}
 	
@@ -49,20 +51,17 @@ public class PlayerDamageListener implements Listener {
 					for(int i = 0; i < armor.length; i++) {
 						//If item in armor slot matches one from config
 						if(armor[i].getTypeId() == (Integer) o && config.getBoolean("allowArmor", false)) {
-							//If a mode has been set for the player
-							if(ToggleCommand.mode.containsKey(p)) {
-								//If that mode is true
-								if(ToggleCommand.mode.get(p) == true) {
-									//Set the item to -1 durability
-									armor[i].setDurability((short) -128);
+							//If that mode is true
+							if(plugin.getMode(p)) {
+								//Set the item to -1 durability
+								armor[i].setDurability((short) -128);
 								//If that mode is false, proceed as normal 
-								} else {
-									//Unless it was set to REALLY unused, then make the durability 0 again
-									if(armor[i].getDurability() < 0 ) {
-										armor[i].setDurability((short) 0);
-									}
+							} else {
+								//Unless it was set to REALLY unused, then make the durability 0 again
+								if(armor[i].getDurability() < 0 ) {
+									armor[i].setDurability((short) 0);
 								}
-							} 
+							}
 						}
 					}
 				//Continue if not a data ID

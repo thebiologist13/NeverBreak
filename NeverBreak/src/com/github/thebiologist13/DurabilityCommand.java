@@ -33,7 +33,7 @@ public class DurabilityCommand implements CommandExecutor {
 			if(p.hasPermission("neverbreak.setdurability")) {
 				
 				if(arg3.length != 1) {
-					p.sendMessage(ChatColor.RED + "You must specify a durability.");
+					plugin.sendMessage(p, ChatColor.RED + "You must specify a durability.");
 					return true;
 				}
 				
@@ -50,7 +50,7 @@ public class DurabilityCommand implements CommandExecutor {
 				try {
 					durability = Integer.parseInt(arg3[0]);
 				} catch(NumberFormatException e) {
-					p.sendMessage(ChatColor.RED + "You must use a number for durability.");
+					plugin.sendMessage(p, ChatColor.RED + "You must use a number for durability.");
 					return true;
 				}
 				
@@ -58,13 +58,13 @@ public class DurabilityCommand implements CommandExecutor {
 				if(holdingValidItem) {
 						
 					ItemStack stack = p.getItemInHand();
-					p.sendMessage(ChatColor.GREEN + "The durability of your tool has been set to " + ChatColor.GOLD + arg3[0] + ChatColor.GREEN + "!");
+					plugin.sendMessage(p, ChatColor.GREEN + "The durability of your tool has been set to " + ChatColor.GOLD + arg3[0] + ChatColor.GREEN + "!");
 					plugin.setTag(stack, durability);
 					stack.setDurability(plugin.getRelativeDurability(stack));
 					
 				} else {
 					
-					p.sendMessage(ChatColor.RED + "You are not holding an item that this server is configured to allow durability setting for.");
+					plugin.sendMessage(p, ChatColor.RED + "You are not holding an item that this server is configured to allow durability setting for.");
 					
 				}
 				
@@ -76,7 +76,7 @@ public class DurabilityCommand implements CommandExecutor {
 		
 		if(p == null && arg1.getName().equalsIgnoreCase("setdurability")) {
 			
-			plugin.log.info("The " + arg1.getName() + " cannot be used from the console.");
+			plugin.sendMessage(arg0, "The " + arg1.getName() + " cannot be used from the console.");
 			return true;
 			
 		}

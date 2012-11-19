@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 import net.minecraft.server.NBTTagCompound;
 
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -32,6 +34,17 @@ import com.github.thebiologist13.listeners.WorldChangeListener;
 
 public class NeverBreak extends JavaPlugin {
 	
+	/*
+	 * Files to look at for CommandBlock
+	 * 
+	 * net.minecraft.server.BlockCommand.class
+	 * net.minecraft.server.TileEntityCommand.class
+	 *     TileEntityCommand.a(World world) is most important.
+	 * net.minecraft.server.TileEntity.class
+	 * net.minecraft.server.SimpleCommandMap.class
+	 *     SimpleCommandMap.dispatch(CommandSender sender, String commandLine) is also crucial.
+	 */
+	
 	//YAML variable
 	private FileConfiguration config;
 	
@@ -48,7 +61,10 @@ public class NeverBreak extends JavaPlugin {
 	private HashMap<Integer, Integer> configuredDurabilities = new HashMap<Integer, Integer>();
 	
 	//Logger
-	Logger log = Logger.getLogger("Minecraft");
+	private Logger log = Logger.getLogger("Minecraft");
+	
+	//Map of modes
+	private HashMap<Player, Boolean> mode = new HashMap<Player, Boolean>();
 	
 	public void onEnable() {
 		
@@ -153,53 +169,48 @@ public class NeverBreak extends JavaPlugin {
 		
 		if(configuredDurabilities.containsKey(stack.getTypeId())) {
 			
-			assignTag(stack);
-			
-			//If a mode has been set for the player
-			if(ToggleCommand.mode.containsKey(p)) {
+			makeTag(stack);
 
-				//If that mode is true
-				if(ToggleCommand.mode.get(p) == true) {
+			//If that mode is true
+			if(getMode(p)) {
 
-					//Set the item to -128 durability
-					stack.setDurability((short) -128);
+				//Set the item to -128 durability
+				stack.setDurability((short) -128);
 
-					//If that mode is false, proceed as normal 
-				} else {
+				//If that mode is false, proceed as normal 
+			} else {
 
-					//Unless it was set to REALLY unused, then make the durability 0 again
-					if(stack.getDurability() < 0 ) {
-						stack.setDurability((short) 0);
-					}
-
-					/*
-					 * c = configured max durability 
-					 * a = tagged damage 
-					 * x = bar durability
-					 * m = real max durability 
-					 * 
-					 * (a/c) + (x/m) = 1
-					 * x/m = 1 - (a/c)
-					 * x = [1 - (a/c)]*m
-					 */
-					
-					if(fullDecrement) {
-						int cd = getTag(stack).getInt("NeverBreak");
-						setTag(stack, cd + 1);
-					}
-					
-					stack.setDurability(getRelativeDurability(stack));
-
+				//Unless it was set to REALLY unused, then make the durability 0 again
+				if(stack.getDurability() < 0 ) {
+					stack.setDurability((short) 0);
 				}
 
-			} 
+				/*
+				 * c = configured max durability 
+				 * a = tagged damage 
+				 * x = bar durability
+				 * m = real max durability 
+				 * 
+				 * (a/c) + (x/m) = 1
+				 * x/m = 1 - (a/c)
+				 * x = [1 - (a/c)]*m
+				 */
+
+				if(fullDecrement) {
+					int cd = getDurability(stack);
+					setTag(stack, cd + 1);
+				}
+
+				stack.setDurability(getRelativeDurability(stack));
+
+			}
 
 		} 
 		
 	}
 	
 	public short getRelativeDurability(ItemStack stack) {
-		float a = getTag(stack).getInt("NeverBreak");
+		float a = getDurability(stack);
 		float c = configuredDurabilities.get(stack.getTypeId());
 		float m = stack.getType().getMaxDurability();
 		short x = (short) Math.round((a / c) * m);
@@ -212,51 +223,33 @@ public class NeverBreak extends JavaPlugin {
 		
 	}
 	
-	public void assignTag(ItemStack stack) {
+	public net.minecraft.server.ItemStack makeTag(ItemStack stack) {
+		net.minecraft.server.ItemStack nmStack = ((CraftItemStack) stack).getHandle();
 		
-		CraftItemStack craftStack = (CraftItemStack) stack;
-		NBTTagCompound myDamageTag = new NBTTagCompound();
-		int dura = 0;
+		if(!nmStack.hasTag())
+			nmStack.tag = new NBTTagCompound();
+		
+		return nmStack;
+	}
+	
+	public int getDurability(ItemStack stack) {
+		
+		NBTTagCompound tag = ((CraftItemStack) stack).getHandle().getTag();
+		
 		String key = "NeverBreak";
-		myDamageTag.setInt(key, dura);
 		
-		if(!craftStack.getHandle().hasTag()) {
-			
-			craftStack.getHandle().setTag(myDamageTag);
-			
-		} else {
-			
-			if(!craftStack.getHandle().getTag().hasKey(key)) {
-				craftStack.getHandle().getTag().setInt(key, dura);
-			}
-			
-		}
-		
-		stack = craftStack;
+		return (tag.hasKey(key)) ? tag.getInt(key) : 0;
 		
 	}
 	
-	public NBTTagCompound getTag(ItemStack stack) {
+	public void setTag(ItemStack stack, int value) {
 		
-		CraftItemStack craftStack = (CraftItemStack) stack;
+		NBTTagCompound tag = new NBTTagCompound();
+		net.minecraft.server.ItemStack nmStack = makeTag(stack);
 		
-		assignTag(stack);
-		
-		return craftStack.getHandle().getTag();
-		
-	}
-	
-	public NBTTagCompound setTag(ItemStack stack, int value) {
-		
-		CraftItemStack craftStack = (CraftItemStack) stack;
-		
-		assignTag(stack);
-		
-		craftStack.getHandle().getTag().setInt("NeverBreak", value);
-		
-		stack = craftStack;
-		
-		return getTag(stack);
+		tag = nmStack.getTag();
+		tag.setInt("NeverBreak", value);
+		nmStack.setTag(tag);
 		
 	}
 	
@@ -291,11 +284,11 @@ public class NeverBreak extends JavaPlugin {
 						damageInt = Integer.parseInt(damageStr);
 					}
 				} catch(NumberFormatException e) {
-					log.info("Invalid config value " + input + ". Make sure it is in the format <item id>:<item damage>");
+					log.info("Invalid config value " + input + ". Make sure it is in the format <item id>-<item damage>");
 				}
 				
 				if(damageInt <= -1 || itemId <= 0) {
-					log.info("Invalid config value " + input + ". Make sure it is in the format <item id>:<item damage>");
+					log.info("Invalid config value " + input + ". Make sure it is in the format <item id>-<item damage>");
 					continue;
 				} else {
 					map.put(itemId, damageInt);
@@ -315,6 +308,61 @@ public class NeverBreak extends JavaPlugin {
 		
 		if(mappedValues != null) {
 			configuredDurabilities = mappedValues;
+		}
+		
+	}
+
+	public boolean getMode(Player p) {
+		return mode.get(p);
+	}
+
+	public void setMode(Player p, boolean mode) {
+		this.mode.put(p, mode);
+	}
+	
+	public void toggleMode(Player p) {
+		boolean cur = this.mode.get(p);
+		this.mode.put(p, !cur);
+	}
+	
+	public void sendMessage(CommandSender sender, String message) {
+		
+		if(sender == null) 
+			return;
+		
+		Player p = null;
+		
+		if(sender instanceof Player)
+			p = (Player) sender;
+		
+		if(p == null) {
+			message = ChatColor.stripColor(message);
+			log.info(message);
+		} else {
+			p.sendMessage(message);
+		}
+		
+	}
+	
+	public void sendMessage(CommandSender sender, String[] message) {
+		
+		if(sender == null) 
+			return;
+		
+		Player p = null;
+		
+		if(sender instanceof Player)
+			p = (Player) sender;
+		
+		if(p == null) {
+			
+			for(String s : message) {
+				s = ChatColor.stripColor(s);
+				log.info(s);
+			}
+			
+		} else {
+			p.sendMessage(message);
 		}
 		
 	}
