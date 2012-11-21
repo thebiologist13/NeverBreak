@@ -114,10 +114,11 @@ public class ToggleCommand implements CommandExecutor{
 								plugin.sendMessage(other, ChatColor.GREEN + "Your NeverBreak mode has been toggled to " + 
 										ChatColor.GOLD + String.valueOf(plugin.getMode(other)) + ChatColor.GREEN + " by " + p.getName() + ".");
 								
-								return true;
 							}
 							
 						}
+						
+						return true;
 						
 					}
 					
