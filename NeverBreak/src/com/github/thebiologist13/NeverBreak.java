@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import net.minecraft.server.NBTTagCompound;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -282,9 +283,18 @@ public class NeverBreak extends JavaPlugin {
 				
 				try {
 					if(dashIndex == -1) {
-						damageInt = 0;
-						
 						itemId = Integer.parseInt(input);
+						
+						Material m = Material.getMaterial(itemId);
+						
+						if(m != null) {
+							damageInt = m.getMaxDurability();
+						} else {
+							log.info("Invalid config value " + input + ". Make sure it is in the format <item id>-<item damage>");
+							continue;
+						}
+							
+						
 					} else {
 						String itemStr = input.substring(0, dashIndex);
 						String damageStr = input.substring(dashIndex + 1, input.length());
@@ -294,6 +304,7 @@ public class NeverBreak extends JavaPlugin {
 					}
 				} catch(NumberFormatException e) {
 					log.info("Invalid config value " + input + ". Make sure it is in the format <item id>-<item damage>");
+					continue;
 				}
 				
 				if(damageInt <= -1 || itemId <= 0) {
@@ -330,7 +341,14 @@ public class NeverBreak extends JavaPlugin {
 	}
 	
 	public void toggleMode(Player p) {
-		boolean cur = this.mode.get(p);
+		boolean cur;
+		
+		if(mode.containsKey(p)) {
+			cur = this.mode.get(p);
+		} else {
+			cur = config.getBoolean("autoNeverBreak", false);
+		}
+		
 		this.mode.put(p, !cur);
 	}
 	
