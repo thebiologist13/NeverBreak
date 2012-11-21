@@ -34,17 +34,6 @@ import com.github.thebiologist13.listeners.WorldChangeListener;
 
 public class NeverBreak extends JavaPlugin {
 	
-	/*
-	 * Files to look at for CommandBlock
-	 * 
-	 * net.minecraft.server.BlockCommand.class
-	 * net.minecraft.server.TileEntityCommand.class
-	 *     TileEntityCommand.a(World world) is most important.
-	 * net.minecraft.server.TileEntity.class
-	 * net.minecraft.server.SimpleCommandMap.class
-	 *     SimpleCommandMap.dispatch(CommandSender sender, String commandLine) is also crucial.
-	 */
-	
 	//YAML variable
 	private FileConfiguration config;
 	
@@ -97,13 +86,31 @@ public class NeverBreak extends JavaPlugin {
 		//Durability map setting
 		putDamages(config);
 		
+		//Just removes players from the map that are not logged in anymore
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+
+			@Override
+			public void run() {
+				
+				for(Player p : mode.keySet()) {
+					
+					if(!p.isOnline()) {
+						mode.remove(p);
+					}
+					
+				}
+				
+			}
+			
+		}, 20, 1200);
+		
 		//Enable message
-		log.info("NeverBreak by thebiologist13 has been enabled!");
+		log.info("NeverBreak v" + this.getDescription().getVersion() + " by thebiologist13 has been enabled!");
 	}
 	
 	public void onDisable() {
 		//Disable message
-		log.info("NeverBreak by thebiologist13 has been disabled!");
+		log.info("NeverBreak v" + this.getDescription().getVersion() + " by thebiologist13 has been disabled!");
 	}
 	
 	//Config stuff
@@ -186,6 +193,8 @@ public class NeverBreak extends JavaPlugin {
 				}
 
 				/*
+				 * Math
+				 * 
 				 * c = configured max durability 
 				 * a = tagged damage 
 				 * x = bar durability

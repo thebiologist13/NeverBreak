@@ -6,7 +6,7 @@ main: com.github.thebiologist13.NeverBreak
 commands:
     neverbreak:
         description: Toggles if NeverBreak is on for yourself.
-        usage: /neverbreak [other player]
+        usage: /neverbreak [other player] [true or false]
         aliases: [nb, nobreak]
         permission: neverbreak.toggle
         permission-message: You don't have the neverbreak.toggle permission!
