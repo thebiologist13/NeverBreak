@@ -105,7 +105,7 @@ public class ToggleCommand implements CommandExecutor{
 								
 								boolean mode = Boolean.parseBoolean(arg3[1]);
 								
-								plugin.setMode(p, mode);
+								plugin.setMode(other, mode);
 								
 								//Send message to player who issued command
 								plugin.sendMessage(p, ChatColor.GREEN + "NeverBreak mode toggled to " + ChatColor.GOLD + 
