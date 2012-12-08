@@ -29,9 +29,18 @@ public class EntityDamageListener implements Listener {
 			return;
 		}
 		
-		//Item player has in hand
-		ItemStack stack = p.getItemInHand();
-
-		plugin.resetDurability(stack, p, true);
+		if(!plugin.getCustomConfig().getBoolean("allowArmor", true))
+			return;
+		
+		//Armor the player is wearing
+		ItemStack[] armor = p.getInventory().getArmorContents();
+		
+		for(ItemStack i : armor) {
+			
+			plugin.resetDurability(i, p, true);
+			
+		}
+		
 	}
+	
 }

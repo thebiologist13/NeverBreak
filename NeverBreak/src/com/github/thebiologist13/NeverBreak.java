@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import net.minecraft.server.NBTTagCompound;
@@ -54,7 +55,7 @@ public class NeverBreak extends JavaPlugin {
 	private Logger log = Logger.getLogger("Minecraft");
 	
 	//Map of modes
-	private HashMap<Player, Boolean> mode = new HashMap<Player, Boolean>();
+	private ConcurrentHashMap<Player, Boolean> mode = new ConcurrentHashMap<Player, Boolean>();
 	
 	public void onEnable() {
 		
