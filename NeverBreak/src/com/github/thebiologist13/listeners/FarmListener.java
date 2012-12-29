@@ -1,6 +1,6 @@
 package com.github.thebiologist13.listeners;
 
-import net.minecraft.server.Material;
+import net.minecraft.server.v1_4_6.Material;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
