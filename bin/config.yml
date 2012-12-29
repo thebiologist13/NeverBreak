@@ -1,0 +1,24 @@
+# NeverBreak Configuration
+# Author: thebiologist13
+
+# Item IDs that can be toggled for NeverBreak and have their durability set.
+# The default IDs are for pickaxes. If you want to configure the  total durability
+# Of tools, use the format <Tool ID>-<Durability Value>.
+items:
+    - 278
+    - 285
+    - 257
+    - 274
+    - 270
+    
+# This is whether NeverBreak is enabled by default when a player logs in.
+autoNeverBreak: false
+
+# Should the NeverBreak mode of a player be saved per-world, or globally?
+globalNeverBreak: true
+
+# Should NeverBreak be enabled for armor?
+allowArmor: false
+
+# Should the login message be displayed?
+messageOnLogin: true 
