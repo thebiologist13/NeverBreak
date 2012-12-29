@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import net.minecraft.server.NBTTagCompound;
+import net.minecraft.server.v1_4_6.NBTTagCompound;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_4_6.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -234,8 +234,8 @@ public class NeverBreak extends JavaPlugin {
 		
 	}
 	
-	public net.minecraft.server.ItemStack makeTag(ItemStack stack) {
-		net.minecraft.server.ItemStack nmStack = ((CraftItemStack) stack).getHandle();
+	public net.minecraft.server.v1_4_6.ItemStack makeTag(ItemStack stack) {
+		net.minecraft.server.v1_4_6.ItemStack nmStack = CraftItemStack.asNMSCopy(stack);
 		
 		if(!nmStack.hasTag())
 			nmStack.tag = new NBTTagCompound();
@@ -245,7 +245,7 @@ public class NeverBreak extends JavaPlugin {
 	
 	public int getDurability(ItemStack stack) {
 		
-		NBTTagCompound tag = ((CraftItemStack) stack).getHandle().getTag();
+		NBTTagCompound tag = CraftItemStack.asNMSCopy(stack).getTag();
 		
 		String key = "NeverBreak";
 		
@@ -256,7 +256,7 @@ public class NeverBreak extends JavaPlugin {
 	public void setTag(ItemStack stack, int value) {
 		
 		NBTTagCompound tag = new NBTTagCompound();
-		net.minecraft.server.ItemStack nmStack = makeTag(stack);
+		net.minecraft.server.v1_4_6.ItemStack nmStack = makeTag(stack);
 		
 		tag = nmStack.getTag();
 		tag.setInt("NeverBreak", value);
