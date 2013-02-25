@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.github.thebiologist13.ItemTagger;
 import com.github.thebiologist13.NeverBreak;
 
 public class BowFireListener implements Listener {
@@ -33,6 +34,10 @@ public class BowFireListener implements Listener {
 		//Item player has in hand
 		ItemStack stack = p.getItemInHand();
 		
-		plugin.resetDurability(stack, p, true);
+		if(plugin.getMode(p))
+			stack.setDurability((short) -1);
+		
+		ItemTagger tagger = new ItemTagger(plugin);
+		tagger.recalculateDurability(stack);
 	}
 }

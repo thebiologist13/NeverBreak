@@ -4,9 +4,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.github.thebiologist13.ItemTagger;
 import com.github.thebiologist13.NeverBreak;
 
 public class EntityDamageListener implements Listener {
@@ -18,11 +19,11 @@ public class EntityDamageListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onEntityDamage(EntityDamageByEntityEvent ev) {
+	public void onEntityDamage(EntityDamageEvent ev) {
 		//Player
 		Player p = null;
 		//Getting a player
-		Entity e = ev.getDamager();
+		Entity e = ev.getEntity();
 		if(e instanceof Player) {
 			p = (Player) e;
 		} else {
@@ -35,11 +36,17 @@ public class EntityDamageListener implements Listener {
 		//Armor the player is wearing
 		ItemStack[] armor = p.getInventory().getArmorContents();
 		
-		for(ItemStack i : armor) {
+		ItemTagger tagger = new ItemTagger(plugin);
+		
+		for(int i = 0; i < armor.length; i++) {
 			
-			plugin.resetDurability(i, p, true);
+			if(plugin.getMode(p))
+				armor[i].setDurability((short) -1);
 			
+			tagger.recalculateDurability(armor[i]);
 		}
+		
+		p.getInventory().setArmorContents(armor);
 		
 	}
 	
