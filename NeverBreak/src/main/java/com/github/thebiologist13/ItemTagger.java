@@ -39,14 +39,12 @@ public class ItemTagger {
 		d = m/c;
 		
 		try {
-			PLUGIN.log.info("********");
-			
 			net.minecraft.server.v1_4_R1.ItemStack handle = getHandle(stack);
 
 			if(!(hasPreviousTag(stack) || hasUsageTag(stack))) { //Not initialized for NeverBreak yet.
 				p = -1;
 				n = 1;
-				y = 0;
+				y = -1;
 				handle = applyTags(stack, p, n);
 				handle.setData(y);
 			} else {
@@ -61,11 +59,11 @@ public class ItemTagger {
 			if(p < y) {
 				x = Math.round((n*m)/c);
 				handle = applyTags(stack, n*d, n + 1);
-				handle.setData(x);
+				handle.setData(x + d);
 			} else if((y - p) < 0) {
 				x = Math.round((n*m)/c);
 				handle = applyTags(stack, y, y);
-				handle.setData(x);
+				handle.setData(x + d);
 			}
 			
 			setHandle(stack, handle);
