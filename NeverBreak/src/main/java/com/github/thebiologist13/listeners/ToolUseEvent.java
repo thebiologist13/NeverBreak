@@ -26,11 +26,13 @@ public class ToolUseEvent implements Listener {
 		Player p = ev.getPlayer();
 		
 		ItemStack stack = p.getItemInHand();
-		
-		if(plugin.getMode(p))
-			stack.setDurability((short) -1);
-		
 		ItemTagger tagger = new ItemTagger(plugin);
+		
+		if(plugin.getMode(p)) {
+			tagger.cancelDurabilityLoss(stack);
+			return;
+		}
+		
 		tagger.recalculateDurability(stack);
 		
 	}

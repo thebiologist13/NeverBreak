@@ -33,11 +33,13 @@ public class BowFireListener implements Listener {
 		
 		//Item player has in hand
 		ItemStack stack = p.getItemInHand();
-		
-		if(plugin.getMode(p))
-			stack.setDurability((short) -1);
-		
 		ItemTagger tagger = new ItemTagger(plugin);
+		
+		if(plugin.getMode(p)) {
+			tagger.cancelDurabilityLoss(stack);
+			return;
+		}
+		
 		tagger.recalculateDurability(stack);
 	}
 }

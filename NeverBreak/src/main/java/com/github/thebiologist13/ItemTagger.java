@@ -26,7 +26,6 @@ public class ItemTagger {
 		int x; //Calculated durability
 		int p; //Previous durability
 		int y; //Tool Durability
-		int d; //Decrement Value
 
 		c = PLUGIN.getConfiguredDurability(stack);
 		m = stack.getType().getMaxDurability();
@@ -35,18 +34,14 @@ public class ItemTagger {
 
 		if(c <= 0)
 			return;
-
-		d = m/c;
 		
 		try {
 			net.minecraft.server.v1_4_R1.ItemStack handle = getHandle(stack);
 
 			if(!(hasPreviousTag(stack) || hasUsageTag(stack))) { //Not initialized for NeverBreak yet.
-				p = -1;
-				n = 1;
-				y = -1;
-				handle = applyTags(stack, p, n);
-				handle.setData(y);
+				handle = applyTags(stack, 0, 0);
+				handle.setData(0);
+				return;
 			} else {
 				p = handle.tag.getInt("NeverBreakPrevious");
 				y = handle.getData();
@@ -57,13 +52,14 @@ public class ItemTagger {
 				return;
 			
 			if(p < y) {
-				x = Math.round((n*m)/c);
-				handle = applyTags(stack, n*d, n + 1);
-				handle.setData(x + d);
+				x = Math.round(((n*m)/c) + 2*(m/c));
+				handle = applyTags(stack, x, n + 1);
+				handle.setData(x);
 			} else if((y - p) < 0) {
-				x = Math.round((n*m)/c);
-				handle = applyTags(stack, y, y);
-				handle.setData(x + d);
+				n = Math.round((c*y)/m);
+				x = Math.round(((n*m)/c) + 2*(m/c));
+				handle = applyTags(stack, x, n);
+				handle.setData(x);
 			}
 			
 			setHandle(stack, handle);
@@ -72,6 +68,34 @@ public class ItemTagger {
 		}
 
 	}
+	
+	public void cancelDurabilityLoss(ItemStack stack) {
+		if(stack == null || stack.getType().equals(Material.AIR))
+			return;
+
+		int p;
+		int n;
+		
+		try {
+			net.minecraft.server.v1_4_R1.ItemStack handle = getHandle(stack);
+
+			if(!(hasPreviousTag(stack) || hasUsageTag(stack))) { //Not initialized for NeverBreak yet.
+				handle = applyTags(stack, 0, 0);
+				handle.setData(0);
+				return;
+			} else {
+				p = handle.tag.getInt("NeverBreakPrevious");
+				n = handle.tag.getInt("NeverBreakUsage");
+			}
+			
+			handle = applyTags(stack, p, n);
+			handle.setData(p);
+			
+			setHandle(stack, handle);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void setDurability(ItemStack stack, int durability) {
 		if(stack == null || stack.getType().equals(Material.AIR))
@@ -79,9 +103,20 @@ public class ItemTagger {
 
 		try {
 			net.minecraft.server.v1_4_R1.ItemStack handle = getHandle(stack);
-			handle = applyTags(stack, durability, durability);
+			int x;
+			int m;
+			int c;
+			c = PLUGIN.getConfiguredDurability(stack);
+			m = stack.getType().getMaxDurability();
+			if(c == m)
+				return;
+
+			if(c <= 0)
+				return;
+			x = Math.round((durability*m)/c);
+			handle = applyTags(stack, x, durability);
+			handle.setData(x);
 			setHandle(stack, handle);
-			recalculateDurability(stack);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -40,8 +40,10 @@ public class EntityDamageListener implements Listener {
 		
 		for(int i = 0; i < armor.length; i++) {
 			
-			if(plugin.getMode(p))
-				armor[i].setDurability((short) -1);
+			if(plugin.getMode(p)) {
+				tagger.cancelDurabilityLoss(armor[i]);
+				continue;
+			}
 			
 			tagger.recalculateDurability(armor[i]);
 		}
